@@ -15,9 +15,6 @@ my_fruit_list = pandas.read_csv("https://uni-lab-files.s3.us-west-2.amazonaws.co
 my_fruit_list = my_fruit_list.set_index('Fruit')
 
 # Let's put a pick list here so they can pick the fruite they want to include
-fruit_choice = streamlit.text_input('what fruit would you like information about?','kiwi')
-streamlit.write ('The user enetered',fruit_choice)
-
 fruits_selected=streamlit.multiselect("pick some fruits:",list(my_fruit_list.index),['Avocado','Strawberries'])
 fruits_to_show=my_fruit_list.loc[fruits_selected]
                                    
@@ -26,9 +23,12 @@ streamlit.dataframe(fruits_to_show)
 
 # New Section to display fruitvice api response
 streamlit.header('Fruitvice Fruit Advice!')
+fruit_choice = streamlit.text_input('what fruit would you like information about?','kiwi')
+streamlit.write ('The user enetered',fruit_choice)
 
 import requests
-fruitvice_response = requests.get("https://fruityvice.com/api/fruit/" + "kiwi")
+
+fruitvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
  
 
 # take the json version of response and normalize it
